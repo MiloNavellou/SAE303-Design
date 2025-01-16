@@ -601,10 +601,12 @@ progress {
 .img-fluid {
   max-width: 100%;
   height: auto;
+  transition: 0.5s;
 }
 
 .img-fluid:hover {
   scale: 1.2;
+  transition: 0.5s;
 }
 
 .img-thumbnail {
@@ -10922,4 +10924,8 @@ header.masthead .bg-circle-4 {
   header.masthead .masthead-content .masthead-subheading {
     font-size: 4rem;
   }
+}
+
+.titleName {
+  font-family: 'MuseoModerno', sans-serif;
 }
