@@ -108,7 +108,7 @@ polygonSeries.mapPolygons.template.on("active", function(active, target) {
 
 function selectCountry(id) { // selectionne l'id du pays mais faut que je trouve comment trouver le nom et le lié au json
   var dataItem = polygonSeries.getDataItemById(id);
-  console.log(dataItem);
+  console.log(dataItem); // Object ==> il faut aller dans _settings puis dans l'objet avec id pour avoir le nom du pays ? 
   var target = dataItem.get("mapPolygon");
   if (target) {
     var centroid = target.geoCentroid();

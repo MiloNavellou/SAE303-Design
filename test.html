@@ -4,110 +4,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obesity Globe</title>
-    <!-- amCharts Core Library -->
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <!-- amCharts Map Library -->
     <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-    <!-- amCharts Globe Projections -->
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <!-- PapaParse Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
 
 <body>
-    <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+    <section id="scroll" class="mt-5 mb-5">
+        <div class="container px-5">
+            <h1 class="card-title display-4">Carte mondiale de l'obésité</h1>
 
+            <!-- Dropdown pour la sélection de l'année -->
+            <label for="year-select">Choisissez une année :</label>
+            <select id="year-select">
+                <!-- Années générées dynamiquement -->
+                <script>
+                    const select = document.getElementById("year-select");
+                    for (let year = 1975; year <= 2016; year++) {
+                        const option = document.createElement("option");
+                        option.value = year;
+                        option.textContent = year;
+                        select.appendChild(option);
+                    }
+                </script>
+            </select>
+
+            <div id="chartdiv"></div>
+        </div>
+        <style>
+            #chartdiv {
+                width: 100%;
+                height: 500px;
+                max-width: 100%;
+            }
+        </style>
+    </section>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
     <script>
-        // Lire le fichier CSV
-        Papa.parse('./share-of-adults-defined-as-obese.csv', {
-            download: true,
-            header: true,
-            complete: function (results) {
+        am5.ready(function () {
+            // Load CSV data
+            async function loadCSV() {
+                const response = await fetch('share-of-adults-defined-as-obese.csv');
+                const csvText = await response.text();
+                const rows = csvText.split('\n').map(row => row.split(','));
+
+                // Parse CSV headers and rows
+                const headers = rows[0];
+                const data = rows.slice(1).map(row => {
+                    const obj = {};
+                    row.forEach((val, i) => {
+                        obj[headers[i]] = val;
+                    });
+                    return obj;
+                });
+
+                return data;
+            }
+
+            // Create root element
+            var root = am5.Root.new("chartdiv");
+
+            // Set themes
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+            // Create the map chart
+            var chart = root.container.children.push(am5map.MapChart.new(root, {
+                panX: "rotateX",
+                panY: "rotateY",
+                projection: am5map.geoOrthographic(),
+                paddingBottom: 20,
+                paddingTop: 20,
+                paddingLeft: 20,
+                paddingRight: 20
+            }));
+
+            // Create main polygon series for countries
+            var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+                geoJSON: am5geodata_worldLow
+            }));
+
+            polygonSeries.mapPolygons.template.setAll({
+                tooltipText: "{name}: {value}%",
+                toggleKey: "active",
+                interactive: true
+            });
+
+            polygonSeries.mapPolygons.template.states.create("hover", {
+                fill: am5.color(0xff0000)
+            });
+
+            polygonSeries.mapPolygons.template.states.create("active", {
+                fill: am5.color(0xff0000)
+            });
+
+            // Update map based on selected year
+            function updateMap(year, data) {
                 const obesityData = {};
 
-                // Parcourir chaque ligne du CSV
-                results.data.forEach(row => {
-                    const countryName = row.Entity;
-                    const iso3Code = row.Code;
-                    const obesityPercentage = parseFloat(row["Prevalence of obesity among adults, BMI >= 30 (crude estimate) (%) - Sex: both sexes - Age group: 18+  years"]);
-                    const year = parseInt(row.Year); // Convertir l'année en entier
+                data.forEach(row => {
+                    const country = row["Entity"];
+                    const rowYear = parseInt(row["Year"], 10);
+                    const value = row['"Prevalence of obesity among adults'];
 
-                    // Filtrer les données pour l'année 2016
-                    if (!isNaN(obesityPercentage) && year === 2016) {
-                        obesityData[iso3Code] = {
-                            name: countryName,
-                            value: obesityPercentage
-                        };
+                    if (rowYear === year) {
+                        obesityData[country] = value;
                     }
                 });
 
-                if (Object.keys(obesityData).length === 0) {
-                    console.error('Aucune donnée trouvée pour l\'année 2016.');
-                } else {
-                    createGlobe(obesityData);
-                }
-            },
-            error: function (error) {
-                console.error('Erreur lors du chargement du fichier CSV :', error);
+                // Add data to polygon series
+                polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                    const countryName = target.dataItem.dataContext.name;
+                    const value = obesityData[countryName];
+                    if (value === undefined) {
+                        return `Absence de données pour ${countryName}`;
+                    } else {
+                        return `${countryName}: ${value}%`;
+                    }
+                });
+
+                polygonSeries.data.setAll(Object.keys(obesityData).map(country => {
+                    return {
+                        id: polygonSeries.getDataItemById(country)?.get("id"),
+                        name: country,
+                        value: obesityData[country]
+                    };
+                }));
             }
-        });
 
-        // Fonction pour créer le globe interactif
-        function createGlobe(obesityData) {
-            console.log(obesityData['name'])
-            am5.ready(function () {
-                var root = am5.Root.new("chartdiv");
-                root.setThemes([am5themes_Animated.new(root)]);
+            // Fetch CSV data and initialize map
+            loadCSV().then(data => {
+                const yearSelect = document.getElementById("year-select");
 
-                var chart = root.container.children.push(
-                    am5map.MapChart.new(root, {
-                        projection: am5map.geoOrthographic(),
-                        panX: "rotateX",
-                        panY: "rotateY",
-                        rotationX: 90,
-                        rotationY: 0
-                    })
-                );
+                // Update map for the initial year
+                updateMap(parseInt(yearSelect.value, 10), data);
 
-                var countrySeries = chart.series.push(
-                    am5map.MapPolygonSeries.new(root, {
-                        geoJSON: am5geodata_worldLow
-                    })
-                );
-
-                // Associer les champs pour les données
-                countrySeries.set("valueField", "value");
-                countrySeries.set("nameField", "name");
-                console.log('x', countrySeries.mapPolygons)
-                countrySeries.mapPolygons.template.setAll({
-                    tooltipText: "{name} est égal à {obesityData['value']} % ",
-                    interactive: true
+                // Update map when the year changes
+                yearSelect.addEventListener("change", () => {
+                    const selectedYear = parseInt(yearSelect.value, 10);
+                    updateMap(selectedYear, data);
                 });
-
-                // Ajouter les données
-                countrySeries.data.setAll(
-                    Object.entries(obesityData).map(([iso3, data]) => ({
-                        id: iso3,
-                        name: data.name,
-                        value: data.value
-                    }))
-                );
-
-                // Vérification des données
-                console.log("Données ajoutées à la carte :", countrySeries.data.values);
-
-                chart.animate({
-                    key: "rotationX",
-                    to: 360,
-                    duration: 30000,
-                    loops: Infinity
-                });
-
-                root.appear(1000, 100);
             });
-        }
+
+            // Make stuff animate on load
+            chart.appear(1000, 100);
+
+        }); // end am5.ready()
     </script>
 </body>
 
