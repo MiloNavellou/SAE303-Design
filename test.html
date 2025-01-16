@@ -143,6 +143,7 @@
             // Fetch CSV data and initialize map
             loadCSV().then(data => {
                 const yearSelect = document.getElementById("year-select");
+
                 updateMap(parseInt(yearSelect.value, 10), data);
                 yearSelect.addEventListener("change", () => {
                     const selectedYear = parseInt(yearSelect.value, 10);
