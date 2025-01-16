@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Mond'Analyse - L'obésité</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/add.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container px-5">
+            <!--  <a class="navbar-brand" href="#page-top">Mond'Analyse</a> -->
+            <a class="navbar-brand titleName" href="#page-top"><img src="/assets/img/logo.png" alt="logo Mond'analyse">
+                Mond'Analyse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link titleName" href="#scroll">Ancre 1</a></li>
+                    <li class="nav-item"><a class="nav-link titleName" href="#graphe">Ancre 2</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="masthead text-center text-white">
+        <div class="masthead-content">
+            <div class="container px-5">
+                <h1 class="masthead-heading mb-0 ">L'obésité dans le monde</h1>
+                <h2 class="masthead-subheading mb-0">Quel pourcentage d'adultes souffre d'obésité ?</h2>
+                <a class="btn btn-primary btn-xl rounded-pill mt-5 titleName" href="#scroll">En savoir plus</a>
+            </div>
+        </div>
+        <div class="bg-circle-1 bg-circle"></div>
+        <div class="bg-circle-2 bg-circle"></div>
+        <div class="bg-circle-3 bg-circle"></div>
+        <div class="bg-circle-4 bg-circle"></div>
+    </header>
+    <!-- Content section 1-->
+    <section id="scroll" class=" mt-5">
+        <div class="container px-5 mt-5">
+            <div class="card">
+                <div class="card-body mt-2 mb-2">
+                    <h1 class="card-title display-3">L'obésité qu'est ce que c'est ?</h1>
+                        <p class="card-text mt-4">L’obésité est un facteur de risque majeur pour une gamme de maladies,
+                            y compris
+                            les maladies
+                            cardiaques, les accidents vasculaires cérébraux, le diabète et divers types de cancer.
+
+                            Elle est le plus souvent mesurée à l’aide de l’échelle de l’indice de masse corporelle
+                            (IMC).
+
+                            Sur cette page, vous trouverez des données et des recherches sur l’obésité : son taux de
+                            présence dans le monde chez les adultes</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content section 2-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/05.png"
+                            alt="conséquences de l'obésité chez l'humain" /></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-5">
+                        <h4 class="display-6">Un Défi Multifactoriel</h4>
+                        <p>L'obésité est un phénomène complexe influencé par de nombreux facteurs interconnectés, comme
+                            le montre cette représentation visuelle. Elle résulte d'un déséquilibre prolongé entre les
+                            apports énergétiques et les dépenses, mais les causes dépassent largement une simple
+                            surconsommation alimentaire.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Conteneur du graphe-->
+    <section id="scroll" class=" mt-5 mb-5">
+        <div class="container px-5">
+        <h1 class="card-title display-4">L'obésité dans le monde en 2016</h1>
+    <div id="chartdiv"></div>
+        </div>
+    <style>
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+            max-width: 100%;
+        }
+    </style>
+    </section>
+
+
+    <!-- Footer-->
+    <footer class="py-5 bg-black">
+        <div class="container px-5">
+            <p class="m-0 text-center text-white small">Copyright &copy; Mond'Analyse 2023</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script>
+        am5.ready(function () {
+            // Load CSV data
+            async function loadCSV() {
+                const response = await fetch('share-of-adults-defined-as-obese.csv');
+                const csvText = await response.text();
+                const rows = csvText.split('\n').map(row => row.split(','));
+
+                // Parse CSV headers and rows
+                const headers = rows[0];
+                const data = rows.slice(1).map(row => {
+                    const obj = {};
+                    row.forEach((val, i) => {
+                        obj[headers[i]] = val;
+                    });
+                    return obj;
+                });
+
+                return data;
+            }
+
+            // Create root element
+            var root = am5.Root.new("chartdiv");
+
+            // Set themes
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+            // Create the map chart
+            var chart = root.container.children.push(am5map.MapChart.new(root, {
+                panX: "rotateX",
+                panY: "rotateY",
+                projection: am5map.geoOrthographic(),
+                paddingBottom: 20,
+                paddingTop: 20,
+                paddingLeft: 20,
+                paddingRight: 20
+            }));
+
+            // Create main polygon series for countries
+            var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+                geoJSON: am5geodata_worldLow
+            }));
+
+            polygonSeries.mapPolygons.template.setAll({
+                tooltipText: "{name}: {value}%",
+                toggleKey: "active",
+                interactive: true
+            });
+
+            polygonSeries.mapPolygons.template.states.create("hover", {
+                fill: am5.color(0xff0000) 
+            });
+
+            polygonSeries.mapPolygons.template.states.create("active", {
+                fill: am5.color(0xff0000) 
+            });
+
+            // Fetch CSV data and process it
+            loadCSV().then(data => {
+                const obesityData = {};
+
+                data.forEach(row => {
+                    console.log(row, "row")
+                    const country = row["Entity"];
+                    const year = parseInt(row["Year"], 10); // , 10
+                    const value = row['"Prevalence of obesity among adults'];
+                    console.log(country, year, value, 'z')
+
+                    if (year === 2016) {
+                        obesityData[country] = value; // input change d'année
+                    }
+                });
+                console.log(obesityData, "x")
+
+                // Add data to polygon series
+                polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
+                    const countryName = target.dataItem.dataContext.name;
+                    const value = obesityData[countryName];
+                    console.log(value,'value')
+                    if(value == undefined) {
+                        return `Absence de données pour ${countryName}`;
+                    }
+                    else {
+                        return `${countryName}: ${value}%`;
+                    }
+                    
+                });
+
+                polygonSeries.data.setAll(Object.keys(obesityData).map(country => {
+                    return {
+                        id: polygonSeries.getDataItemById(country)?.get("id"),
+                        name: country,
+                        value: obesityData[country]
+                    };
+                }));
+            });
+
+            // Make stuff animate on load
+            chart.appear(1000, 100);
+
+        }); // end am5.ready()
+    </script>
+
+
+</body>
+
+</html>
