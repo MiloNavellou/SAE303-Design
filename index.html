@@ -39,8 +39,8 @@
                     class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link titleName" href="#scroll">Ancre 1</a></li>
-                    <li class="nav-item"><a class="nav-link titleName" href="#graphe">Ancre 2</a></li>
+                    <li class="nav-item"><a class="nav-link titleName" href="#scroll">Articles</a></li>
+                    <li class="nav-item"><a class="nav-link titleName" href="#graphe">Map</a></li>
                 </ul>
             </div>
         </div>
@@ -65,16 +65,16 @@
             <div class="card">
                 <div class="card-body mt-2 mb-2">
                     <h1 class="card-title display-3">L'obésité qu'est ce que c'est ?</h1>
-                        <p class="card-text mt-4">L’obésité est un facteur de risque majeur pour une gamme de maladies,
-                            y compris
-                            les maladies
-                            cardiaques, les accidents vasculaires cérébraux, le diabète et divers types de cancer.
+                    <p class="card-text mt-4">L’obésité est un facteur de risque majeur pour une gamme de maladies,
+                        y compris
+                        les maladies
+                        cardiaques, les accidents vasculaires cérébraux, le diabète et divers types de cancer.
 
-                            Elle est le plus souvent mesurée à l’aide de l’échelle de l’indice de masse corporelle
-                            (IMC).
+                        Elle est le plus souvent mesurée à l’aide de l’échelle de l’indice de masse corporelle
+                        (IMC).
 
-                            Sur cette page, vous trouverez des données et des recherches sur l’obésité : son taux de
-                            présence dans le monde chez les adultes</p>
+                        Sur cette page, vous trouverez des données et des recherches sur l’obésité : son taux de
+                        présence dans le monde chez les adultes</p>
 
                 </div>
             </div>
@@ -101,20 +101,53 @@
         </div>
     </section>
     <!-- Conteneur du graphe-->
-    <section id="scroll" class=" mt-5 mb-5">
+    <section id="graphe" class="mt-5 mb-5">
         <div class="container px-5">
-        <h1 class="card-title display-4">L'obésité dans le monde en 2016</h1>
-    <div id="chartdiv"></div>
-        </div>
-    <style>
-        #chartdiv {
-            width: 100%;
-            height: 500px;
-            max-width: 100%;
-        }
-    </style>
-    </section>
+            <h1 class="card-title">Carte mondiale de l'obésité de 1975 à 2016</h1>
 
+
+            <label for="year-select">Choisissez une année :</label>
+            <select id="year-select">
+
+                <script>
+                    const select = document.getElementById("year-select");
+                    for (let year = 1975; year <= 2016; year++) {
+                        const option = document.createElement("option");
+                        option.value = year;
+                        option.textContent = year;
+                        select.appendChild(option);
+                    }
+                </script>
+            </select>
+
+            <div id="chartdiv"></div>
+        </div>
+        <style>
+            #chartdiv {
+                width: 100%;
+                height: 500px;
+                max-width: 100%;
+            }
+
+            label {
+                font-size: 18px;
+                font-weight: bold;
+                margin-right: 10px;
+                color: #333;
+            }
+
+            select {
+                padding: 10px;
+                font-size: 16px;
+                border: 2px solid #007BFF;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+                color: #333;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+        </style>
+    </section>
 
     <!-- Footer-->
     <footer class="py-5 bg-black">
@@ -178,42 +211,36 @@
             });
 
             polygonSeries.mapPolygons.template.states.create("hover", {
-                fill: am5.color(0xff0000) 
+                fill: am5.color(0xff0000)
             });
 
             polygonSeries.mapPolygons.template.states.create("active", {
-                fill: am5.color(0xff0000) 
+                fill: am5.color(0xff0000)
             });
 
-            // Fetch CSV data and process it
-            loadCSV().then(data => {
+            // Update map based on selected year
+            function updateMap(year, data) {
                 const obesityData = {};
 
                 data.forEach(row => {
-                    console.log(row, "row")
                     const country = row["Entity"];
-                    const year = parseInt(row["Year"], 10); // , 10
+                    const rowYear = parseInt(row["Year"], 10);
                     const value = row['"Prevalence of obesity among adults'];
-                    console.log(country, year, value, 'z')
 
-                    if (year === 2016) {
-                        obesityData[country] = value; // input change d'année
+                    if (rowYear === year) {
+                        obesityData[country] = value;
                     }
                 });
-                console.log(obesityData, "x")
 
                 // Add data to polygon series
                 polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
                     const countryName = target.dataItem.dataContext.name;
                     const value = obesityData[countryName];
-                    console.log(value,'value')
-                    if(value == undefined) {
+                    if (value === undefined) {
                         return `Absence de données pour ${countryName}`;
-                    }
-                    else {
+                    } else {
                         return `${countryName}: ${value}%`;
                     }
-                    
                 });
 
                 polygonSeries.data.setAll(Object.keys(obesityData).map(country => {
@@ -223,6 +250,17 @@
                         value: obesityData[country]
                     };
                 }));
+            }
+
+            // Fetch CSV data and initialize map
+            loadCSV().then(data => {
+                const yearSelect = document.getElementById("year-select");
+
+                updateMap(parseInt(yearSelect.value, 10), data);
+                yearSelect.addEventListener("change", () => {
+                    const selectedYear = parseInt(yearSelect.value, 10);
+                    updateMap(selectedYear, data);
+                });
             });
 
             // Make stuff animate on load
@@ -230,7 +268,6 @@
 
         }); // end am5.ready()
     </script>
-
 
 </body>
 
