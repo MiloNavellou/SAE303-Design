@@ -101,7 +101,7 @@
         </div>
     </section>
     <!-- Conteneur du graphe-->
-    <section id="graphe" class="mt-5 mb-5" >
+    <section id="graphe" class="mt-5 mb-5">
         <div class="container px-5">
             <h1 class="card-title">Carte mondiale de l'obésité de 1975 à 2016</h1>
 
@@ -119,10 +119,17 @@
                     }
                 </script>
             </select>
+            <div class="borderr mb-5">
+                <div id="chartdiv"></div>
+            </div>
 
-            <div id="chartdiv"></div>
         </div>
         <style>
+            .borderr {
+                border: solid;
+                border-radius: 20pt;
+            }
+
             #chartdiv {
                 width: 100%;
                 height: 500px;
@@ -166,7 +173,7 @@
                 const response = await fetch('share-of-adults-defined-as-obese.csv');
                 const csvText = await response.text();
                 const rows = csvText.split('\n').map(row => row.split(','));
-    
+
                 // Parse CSV headers and rows
                 const headers = rows[0];
                 const data = rows.slice(1).map(row => {
@@ -176,18 +183,31 @@
                     });
                     return obj;
                 });
-    
+
                 return data;
             }
-    
+
+            // Function to interpolate color
+            function getColorForObesity(value) {
+                // Normalize value between 0 (low obesity) and 100 (high obesity)
+                const normalizedValue = Math.min(Math.max(value, 0), 1) / 5;
+
+                // Interpolate from green (0x00FF00) to red (0xFF0000)
+                const red = Math.floor(255 * normalizedValue);
+                const green = Math.floor(255 * (1 - normalizedValue));
+
+                return am5.color((red << 16) | (green << 8));  // Constructing color from red and green components
+            }
+
+
             // Create root element
             var root = am5.Root.new("chartdiv");
-    
+
             // Set themes
             root.setThemes([
                 am5themes_Animated.new(root)
             ]);
-    
+
             // Create the map chart
             var chart = root.container.children.push(am5map.MapChart.new(root, {
                 panX: "rotateX",
@@ -198,47 +218,63 @@
                 paddingLeft: 20,
                 paddingRight: 20
             }));
-    
+
             // Create main polygon series for countries
             var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
                 geoJSON: am5geodata_worldLow
             }));
-    
+
             polygonSeries.mapPolygons.template.setAll({
                 tooltipText: "{name}: {value}%",
                 toggleKey: "active",
                 interactive: true
             });
-    
+
             polygonSeries.mapPolygons.template.states.create("hover", {
-                fill: am5.color(0xff0000)
+                fill: am5.color(0xFF8888)
             });
-    
+
             polygonSeries.mapPolygons.template.states.create("active", {
-                fill: am5.color(0xff0000)
+                fill: am5.color(0xFF8888)
             });
-    
-            // Function to calculate color based on percentage (green for low, red for high)
-            function getColorForPercentage(percentage) {
-                // The range is between 0 (green) and 100 (red)
-                const colorScale = am5.color(percentage < 50 ? `rgb(0, ${Math.round(255 - (percentage * 2.55))}, 0)` : `rgb(${Math.round((percentage - 50) * 5.1)}, 0, 0)`);
-                return colorScale;
-            }
-    
+
+            var backgroundSeries = chart.series.unshift(
+                am5map.MapPolygonSeries.new(root, {})
+            );
+
+            // Create series for background fill
+            // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
+            var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+            backgroundSeries.mapPolygons.template.setAll({
+                fill: root.interfaceColors.get("alternativeBackground"),
+                fillOpacity: 0.1,
+                strokeOpacity: 0
+            });
+            backgroundSeries.data.push({
+                geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+            });
+
+            var graticuleSeries = chart.series.unshift(
+                am5map.GraticuleSeries.new(root, {
+                    step: 10
+                })
+            );
+
+            graticuleSeries.mapLines.template.set("strokeOpacity", 0.1)
             // Update map based on selected year
             function updateMap(year, data) {
                 const obesityData = {};
-    
+
                 data.forEach(row => {
                     const country = row["Entity"];
                     const rowYear = parseInt(row["Year"], 10);
-                    const value = row['"Prevalence of obesity among adults'];
-    
+                    const value = parseFloat(row['"Prevalence of obesity among adults']);
+
                     if (rowYear === year) {
                         obesityData[country] = value;
                     }
                 });
-    
+
                 // Add data to polygon series
                 polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
                     const countryName = target.dataItem.dataContext.name;
@@ -249,36 +285,43 @@
                         return `${countryName}: ${value}%`;
                     }
                 });
-    
+
+                polygonSeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
+                    const countryName = target.dataItem.dataContext.name;
+                    const obesityValue = obesityData[countryName];
+                    if (obesityValue !== undefined) {
+                        return getColorForObesity(obesityValue);
+                    }
+                    return fill; // Default color if no data is available
+                });
+
+                // Apply data to map polygons
                 polygonSeries.data.setAll(Object.keys(obesityData).map(country => {
-                    const value = obesityData[country];
-                    console.log("caca",getColorForPercentage(parseFloat(value)));
                     return {
                         id: polygonSeries.getDataItemById(country)?.get("id"),
                         name: country,
-                        value: value,
-                        fill:  `#${getColorForPercentage(parseFloat(value))}` // Set color based on percentage
+                        value: obesityData[country]
                     };
                 }));
             }
-    
+
             // Fetch CSV data and initialize map
             loadCSV().then(data => {
                 const yearSelect = document.getElementById("year-select");
-    
+
                 updateMap(parseInt(yearSelect.value, 10), data);
                 yearSelect.addEventListener("change", () => {
                     const selectedYear = parseInt(yearSelect.value, 10);
                     updateMap(selectedYear, data);
                 });
             });
-    
+
             // Make stuff animate on load
             chart.appear(1000, 100);
-    
+
         }); // end am5.ready()
     </script>
-    
+
 
 </body>
 
