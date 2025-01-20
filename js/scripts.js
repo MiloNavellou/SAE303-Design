@@ -19,7 +19,7 @@ am5.ready(function () {
 
     function getColorForObesity(value) {
         if (value >= 0 && value < 5) {
-            return am5.color(0x04CE03);
+            return am5.color(0x75A141);
         }
         if (value >= 5 && value < 15) {
             return am5.color(0xFFCE00);
@@ -51,7 +51,9 @@ am5.ready(function () {
     polygonSeries.mapPolygons.template.setAll({
         fill: am5.color(0xD3D3D3),
         fillOpacity: 1,
-        strokeOpacity: 0,
+        strokeWidth: 1, 
+        stroke: am5.color(0xffffff),
+        strokeOpacity: 1,
         tooltipText: "{name}: {value}%",
         toggleKey: "active",
         interactive: true
