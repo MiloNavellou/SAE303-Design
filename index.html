@@ -104,7 +104,7 @@
 
             <label for="year-range">Choisissez une année (1975 à 2016) :</label> <span id="year-display">1975</span>
             <input type="range" id="year-range" min="1975" max="2016" step="1" value="1975" />
-            
+
 
             <div class="borderr mb-5 mt-2">
                 <div id="chartdiv"></div>
@@ -187,7 +187,7 @@
                 background: #bbb;
             }
 
-            /* Lorsque la poignée est survolée, changer la couleur */
+
             .year-range::-webkit-slider-thumb:hover {
                 background: #0056b3;
             }
@@ -196,7 +196,7 @@
                 background: #0056b3;
             }
 
-            /* Affichage de l'année sélectionnée */
+
             .year-display {
                 margin-left: 20px;
                 font-size: 18px;
@@ -315,7 +315,7 @@
             var root = am5.Root.new("chartdiv");
             root.setThemes([am5themes_Animated.new(root)]);
 
-            
+
 
             var chart = root.container.children.push(am5map.MapChart.new(root, {
                 panX: "rotateX",
@@ -328,6 +328,9 @@
             }));
 
             polygonSeries.mapPolygons.template.setAll({
+                fill: am5.color(0xD3D3D3),
+                fillOpacity: 1,
+                strokeOpacity: 0,
                 tooltipText: "{name}: {value}%",
                 toggleKey: "active",
                 interactive: true
