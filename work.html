@@ -8,9 +8,7 @@
     <meta name="author" content="" />
     <title>Mond'Analyse - L'obésité</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;700&display=swap" rel="stylesheet">
@@ -45,7 +43,7 @@
         </div>
     </nav>
 
-    <!-- Header-->
+    <!-- Header -->
     <header class="masthead text-center text-white">
         <div class="masthead-content">
             <div class="container px-5">
@@ -60,7 +58,7 @@
         <div class="bg-circle-4 bg-circle"></div>
     </header>
 
-    <!-- Content section 1-->
+    <!-- Conteneur article -->
     <section id="scroll" class=" mt-5">
         <div class="container px-5 mt-5">
             <div class="card">
@@ -76,7 +74,7 @@
         </div>
     </section>
 
-    <!-- Content section 2-->
+    <!-- Conteneur article -->
     <section>
         <div class="container px-5">
             <div class="row gx-5 align-items-center">
@@ -97,22 +95,20 @@
         </div>
     </section>
 
-    <!-- Conteneur du graphe-->
+    <!-- Conteneur du graphe -->
     <section id="graphe" class="mt-5 mb-5">
         <div class="container px-5">
             <h1 class="card-title">Carte mondiale de l'obésité de 1975 à 2016</h1>
 
             <label for="year-range">Choisissez une année (1975 à 2016) :</label> <span id="year-display">1975</span>
             <input type="range" id="year-range" min="1975" max="2016" step="1" value="1975" />
-            
+
 
             <div class="borderr mb-5 mt-2">
                 <div id="chartdiv"></div>
             </div>
         </div>
-
-        <div class="container">
-            <h1 class="text-center mb-4">Légende</h1>
+        <div class="container px-5">
             <div class="row justify-content-center g-3">
                 <div class="col-6 col-md-2">
                     <div class="color-box color-0-10">0-5%</div>
@@ -131,140 +127,140 @@
                 </div>
             </div>
         </div>
-
-        <style>
-            .year-label {
-                font-size: 18px;
-                font-weight: 600;
-                color: #333;
-                margin-bottom: 10px;
-                display: block;
-                text-align: center;
-            }
-
-            /* Conteneur du range slider */
-            .year-slider-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 20px;
-            }
-
-            /* Style du slider */
-            .year-range {
-                width: 100%;
-                max-width: 500px;
-                height: 10px;
-                -webkit-appearance: none;
-                background: #ddd;
-                border-radius: 5px;
-                outline: none;
-                transition: background 0.3s ease;
-            }
-
-            /* Style de la poignée du slider */
-            .year-range::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: #007BFF;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-
-            .year-range::-moz-range-thumb {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: #007BFF;
-                cursor: pointer;
-            }
-
-            /* Lorsque le slider est survolé, changer la couleur */
-            .year-range:hover {
-                background: #bbb;
-            }
-
-            /* Lorsque la poignée est survolée, changer la couleur */
-            .year-range::-webkit-slider-thumb:hover {
-                background: #0056b3;
-            }
-
-            .year-range::-moz-range-thumb:hover {
-                background: #0056b3;
-            }
-
-            /* Affichage de l'année sélectionnée */
-            .year-display {
-                margin-left: 20px;
-                font-size: 18px;
-                font-weight: 600;
-                color: #333;
-            }
-
-            .color-box {
-                width: 100%;
-                height: 100px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-weight: bold;
-                color: white;
-                border-radius: 8px;
-            }
-
-            .color-0-10 {
-                background-color: #04CE03;
-            }
-
-            .color-10-20 {
-                background-color: #FFCE00;
-            }
-
-            .color-20-30 {
-                background-color: #FF8000;
-            }
-
-            .color-30-40 {
-                background-color: #BF4000;
-            }
-
-            .color-40-50 {
-                background-color: #800000;
-            }
-
-            .borderr {
-                border: solid;
-                border-radius: 20pt;
-            }
-
-            #chartdiv {
-                width: 100%;
-                height: 500px;
-                max-width: 100%;
-            }
-
-            label {
-                font-size: 18px;
-                font-weight: bold;
-                margin-right: 10px;
-                color: #333;
-            }
-
-            input[type="range"] {
-                width: 100%;
-                margin: 20px 0;
-            }
-
-            span {
-                font-size: 18px;
-                font-weight: bold;
-                color: #b518a5;
-            }
-        </style>
     </section>
+
+    <style>
+        .year-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+
+        /* Conteneur du range slider */
+        .year-slider-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Style du slider */
+        .year-range {
+            width: 100%;
+            max-width: 500px;
+            height: 10px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        /* Style de la poignée du slider */
+        .year-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007BFF;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .year-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007BFF;
+            cursor: pointer;
+        }
+
+        /* Lorsque le slider est survolé, changer la couleur */
+        .year-range:hover {
+            background: #bbb;
+        }
+
+
+        .year-range::-webkit-slider-thumb:hover {
+            background: #0056b3;
+        }
+
+        .year-range::-moz-range-thumb:hover {
+            background: #0056b3;
+        }
+
+
+        .year-display {
+            margin-left: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .color-0-10 {
+            background-color: #04CE03;
+        }
+
+        .color-10-20 {
+            background-color: #FFCE00;
+        }
+
+        .color-20-30 {
+            background-color: #FF8000;
+        }
+
+        .color-30-40 {
+            background-color: #BF4000;
+        }
+
+        .color-40-50 {
+            background-color: #800000;
+        }
+
+        .borderr {
+            border: solid;
+            border-radius: 20pt;
+        }
+
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+            max-width: 100%;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #b518a5;
+        }
+    </style>
 
     <!-- Footer-->
     <footer class="py-5 bg-black">
@@ -273,144 +269,10 @@
         </div>
     </footer>
 
-    <!-- Bootstrap core JS-->
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-    <script>
-        am5.ready(function () {
-            async function loadCSV() {
-                const response = await fetch('share-of-adults-defined-as-obese.csv');
-                const csvText = await response.text();
-                const rows = csvText.split('\n').map(row => row.split(','));
-
-                const headers = rows[0];
-                const data = rows.slice(1).map(row => {
-                    const obj = {};
-                    row.forEach((val, i) => {
-                        obj[headers[i]] = val;
-                    });
-                    return obj;
-                });
-
-                return data;
-            }
-
-            function getColorForObesity(value) {
-                if (value >= 0 && value < 5) {
-                    return am5.color(0x04CE03);
-                }
-                if (value >= 5 && value < 15) {
-                    return am5.color(0xFFCE00);
-                }
-                if (value >= 15 && value < 25) {
-                    return am5.color(0xFF8000);
-                }
-                if (value >= 25 && value < 35) {
-                    return am5.color(0xBF4000);
-                }
-                return am5.color(0x800000);
-            }
-
-            var root = am5.Root.new("chartdiv");
-            root.setThemes([am5themes_Animated.new(root)]);
-
-            
-
-            var chart = root.container.children.push(am5map.MapChart.new(root, {
-                panX: "rotateX",
-                panY: "rotateY",
-                projection: am5map.geoOrthographic()
-            }));
-
-            var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-                geoJSON: am5geodata_worldLow
-            }));
-
-            polygonSeries.mapPolygons.template.setAll({
-                tooltipText: "{name}: {value}%",
-                toggleKey: "active",
-                interactive: true
-            });
-
-            var backgroundSeries = chart.series.unshift(
-                am5map.MapPolygonSeries.new(root, {})
-            );
-
-            // Create series for background fill
-            // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
-            var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-            backgroundSeries.mapPolygons.template.setAll({
-                fill: root.interfaceColors.get("alternativeBackground"),
-                fillOpacity: 0.1,
-                strokeOpacity: 0
-            });
-            backgroundSeries.data.push({
-                geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-            });
-
-            var graticuleSeries = chart.series.unshift(
-                am5map.GraticuleSeries.new(root, {
-                    step: 10
-                })
-            );
-
-            graticuleSeries.mapLines.template.set("strokeOpacity", 0.1)
-
-            function updateMap(year, data) {
-                const obesityData = {};
-                data.forEach(row => {
-                    const country = row["Entity"];
-                    const rowYear = parseInt(row["Year"], 10);
-                    const value = parseFloat(row['"Prevalence of obesity among adults']);
-                    if (rowYear === year) {
-                        obesityData[country] = value;
-                    }
-                });
-
-                polygonSeries.mapPolygons.template.adapters.add("tooltipText", (text, target) => {
-                    const countryName = target.dataItem.dataContext.name;
-                    const value = obesityData[countryName];
-                    if (value === undefined) {
-                        return `Absence de données pour ${countryName}`;
-                    } else {
-                        return `${countryName}: ${value}%`;
-                    }
-                });
-
-                polygonSeries.mapPolygons.template.adapters.add("fill", (fill, target) => {
-                    const countryName = target.dataItem.dataContext.name;
-                    const obesityValue = obesityData[countryName];
-                    if (obesityValue !== undefined) {
-                        return getColorForObesity(obesityValue);
-                    }
-                    return fill;
-                });
-
-                polygonSeries.data.setAll(Object.keys(obesityData).map(country => {
-                    return {
-                        id: polygonSeries.getDataItemById(country)?.get("id"),
-                        name: country,
-                        value: obesityData[country]
-                    };
-                }));
-            }
-
-            loadCSV().then(data => {
-                const range = document.getElementById("year-range");
-                const display = document.getElementById("year-display");
-
-                range.addEventListener("input", function () {
-                    display.textContent = range.value;
-                    updateMap(parseInt(range.value, 10), data);
-                });
-
-                updateMap(parseInt(range.value, 10), data);
-            });
-
-            chart.appear(1000, 100);
-        });
-    </script>
+  
 </body>
 
 </html>
