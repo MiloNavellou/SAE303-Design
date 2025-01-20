@@ -19,7 +19,7 @@ am5.ready(function () {
 
     function getColorForObesity(value) {
         if (value >= 0 && value < 5) {
-            return am5.color(0x75A141);
+            return am5.color(0x04CE03);
         }
         if (value >= 5 && value < 15) {
             return am5.color(0xFFCE00);
