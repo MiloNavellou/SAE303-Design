@@ -13,30 +13,27 @@ am5.ready(function () {
             });
             return obj;
         });
-
         return data;
     }
 
     function getColorForObesity(value) {
-        if (value >= 0 && value < 5) {
-            return am5.color(0x04CE03);
+        if (value >= 0 && value < 5) {       
+            return am5.color(0xFFEB3B); 
         }
-        if (value >= 5 && value < 15) {
-            return am5.color(0xFFCE00);
+        if (value >= 5 && value < 15) {      
+            return am5.color(0xFFC107); 
         }
         if (value >= 15 && value < 25) {
-            return am5.color(0xFF8000);
+            return am5.color(0xFF9800);
         }
         if (value >= 25 && value < 35) {
-            return am5.color(0xBF4000);
+            return am5.color(0xF4511E);
         }
-        return am5.color(0x800000);
+        return am5.color(0xB71C1C); 
     }
-
+    
     var root = am5.Root.new("chartdiv");
     root.setThemes([am5themes_Animated.new(root)]);
-
-
 
     var chart = root.container.children.push(am5map.MapChart.new(root, {
         panX: "rotateX",
@@ -53,7 +50,7 @@ am5.ready(function () {
         fillOpacity: 1,
         strokeWidth: 1, 
         stroke: am5.color(0xffffff),
-        strokeOpacity: 1,
+        strokeOpacity: 0.5,
         tooltipText: "{name}: {value}%",
         toggleKey: "active",
         interactive: true
@@ -67,9 +64,9 @@ am5.ready(function () {
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
     backgroundSeries.mapPolygons.template.setAll({
-        fill: root.interfaceColors.get("alternativeBackground"),
-        fillOpacity: 0.1,
-        strokeOpacity: 0
+        fill: am5.color(0xD3D3D3), // Bleu clair pastel
+        fillOpacity: 0.2, // Opacité complète pour un meilleur contraste
+        strokeOpacity: 1
     });
     backgroundSeries.data.push({
         geometry: am5map.getGeoRectangle(90, 180, -90, -180)
@@ -125,9 +122,11 @@ am5.ready(function () {
     loadCSV().then(data => {
         const range = document.getElementById("year-range");
         const display = document.getElementById("year-display");
+        const display1 = document.getElementById("year-display1");
 
         range.addEventListener("input", function () {
             display.textContent = range.value;
+            display1.textContent = range.value;
             updateMap(parseInt(range.value, 10), data);
         });
 

@@ -99,12 +99,10 @@
     <section id="graphe" class="mt-5 mb-5">
         <div class="container px-5">
             <h1 class="card-title">Carte mondiale de l'obésité de 1975 à 2016</h1>
-
-            <label for="year-range">Choisissez une année (1975 à 2016) :</label> <span id="year-display">1975</span>
-            <input type="range" id="year-range" min="1975" max="2016" step="1" value="1975" />
-
-
-            <div class="borderr mb-5 mt-2">
+            <label for="year-range">Choisissez une année (1975 à 2016) :</label><span id="year-display1">1975</span>
+            <input type="range" id="year-range" class="slider mt-5" min="1975" max="2016" step="1" value="1975" />
+            <div id="year-display">1975</div>
+            <div class="borderr  mb-5 mt-2">
                 <div id="chartdiv"></div>
             </div>
         </div>
@@ -139,7 +137,7 @@
             text-align: center;
         }
 
-        /* Conteneur du range slider */
+
         .year-slider-container {
             display: flex;
             justify-content: center;
@@ -147,7 +145,7 @@
             margin-top: 20px;
         }
 
-        /* Style du slider */
+
         .year-range {
             width: 100%;
             max-width: 500px;
@@ -159,7 +157,7 @@
             transition: background 0.3s ease;
         }
 
-        /* Style de la poignée du slider */
+
         .year-range::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -260,6 +258,44 @@
             font-weight: bold;
             color: #b518a5;
         }
+
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50%;
+            height: 7px;
+            background: rgb(26, 24, 25);
+            outline: none;
+            border: 2px solid rgb(26, 24, 25);
+            border-radius: 8px;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 60px;
+            background: #000;
+            cursor: pointer;
+            border: 5px solid rgb(93, 96, 90);
+            border-radius: 4px;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 10px;
+            height: 40px;
+            background: #ffffff;
+            cursor: pointer;
+            border: 2px solid rgb(26, 24, 25);
+            border-radius: 4px;
+        }
+
+        #year-display {
+            margin-top: 20px;
+            color: rgb(0, 0, 0);
+            font-size: 32px;
+            font-weight: bold;
+        }
     </style>
 
     <!-- Footer-->
@@ -268,11 +304,18 @@
             <p class="m-0 text-center text-white small">Copyright &copy; Mond'Analyse 2023</p>
         </div>
     </footer>
+    <script>
+        const yearRange = document.getElementById("year-range");
+        const yearDisplay = document.getElementById("year-display");
 
- 
+        yearRange.addEventListener("input", () => {
+            yearDisplay.textContent = yearRange.value;
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
-  
+
 </body>
 
 </html>
