@@ -100,7 +100,11 @@
         <div class="container px-5">
             <h1 class="card-title">Carte mondiale de l'obésité de 1975 à 2016</h1>
             <label for="year-range">Choisissez une année (1975 à 2016) :</label><span id="year-display1">1975</span>
-            <input type="range" id="year-range" class="slider mt-5" min="1975" max="2016" step="1" value="1975" />
+            <div class="slider-container text-center mt-5">
+                <span class="slider-label-start">1975</span>
+                <input type="range" id="year-range" class="slider mt-5" min="1975" max="2016" step="1" value="1975" />
+                <span class="slider-label-end">2016</span>
+            </div>
             <div id="year-display">1975</div>
             <div class="borderr mb-5 mt-2">
                 <div id="chartdiv"></div>
@@ -296,6 +300,48 @@
             font-size: 32px;
             font-weight: bold;
         }
+        .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.slider-label-start, 
+.slider-label-end {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333; /* Changez pour une couleur plus visible si nécessaire */
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 50%;
+    height: 15px;
+    background: #ddd;
+    outline: none;
+    border-radius: 8px;
+    border: 2px solid #888;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
     </style>
 
     <!-- Footer-->
